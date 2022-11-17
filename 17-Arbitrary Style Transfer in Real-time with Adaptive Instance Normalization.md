@@ -62,7 +62,7 @@ $$ \mu_{n c}(x)=\frac{1}{H W} \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n c h w}$$
 
 $$ \sigma_{n c}(x)=\sqrt{\frac{1}{H W} \sum_{h=1}^{H} \sum_{w=1}^{W}\left(x_{n c h w}-\mu_{n c}(x)\right)^{2}+\epsilon} $$
 
-这是代码的一小步, 确实性能提升的一大步. 为什么instance norm有这么好的效果?
+这是代码的一小步, 也是性能提升的一大步. 为什么instance norm有这么好的效果?
 
 ## Instance Normalization的作用-Ulyanov的观点
 
@@ -79,7 +79,9 @@ Ulyanov在原文中写道: Intuitively, the normalization process allows to remo
 label1:
 
 我的理解, Ulyanov认为instance norm将所有图像调整成了相同的对比度(方差). 例如下面两张图:
+
 ![](imgs/014.png)![](imgs/015.png)
+
 左边图像比较灰暗, 像素的方差较小, 图像的对比度较小; 右侧的图像花里胡哨, 像素的方差较大, 图像的对比度较大. Ulyanov认为instance norm将其调整成相同的对比度(方差). 进一步的, 模型的输入图像更为单一, 不会让愚笨的神经网络处理各种复杂的输入图像. 
 
 ![](imgs/017.png)
@@ -113,6 +115,7 @@ $\gamma , \beta$
 ## 模型
 
 本文的模型如下所示:
+
 ![](imgs/018.png)
 
 一些记号:
