@@ -49,13 +49,17 @@ $y_c$
 众所周知, batch normalization是人类的老朋友, 也被用于早期的风格迁移网络. 其公式长这个样子:
 
 $$ \mathrm{BN}(x)=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta $$
+
 $$ \mu_{c}(x)=\frac{1}{N H W} \sum_{n=1}^{N} \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n c h w} $$
+
 $$ \sigma_{c}(x)=\sqrt{\frac{1}{N H W} \sum_{n=1}^{N} \sum_{h=1}^{H} \sum_{w=1}^{W}\left(x_{n c h w}-\mu_{c}(x)\right)^{2}+\epsilon} $$
 
 batch norm在整个批次的N张图像上计算均值和方差. Ulyanov提出将其修改为Instance Normalization, 即在一张图像上计算均值和方差, 而不是在一个批次的N张图像中. 即:
 
 $$ \operatorname{IN}(x)=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta $$
+
 $$ \mu_{n c}(x)=\frac{1}{H W} \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n c h w}$$
+
 $$ \sigma_{n c}(x)=\sqrt{\frac{1}{H W} \sum_{h=1}^{H} \sum_{w=1}^{W}\left(x_{n c h w}-\mu_{n c}(x)\right)^{2}+\epsilon} $$
 
 这是代码的一小步, 确实性能提升的一大步. 为什么instance norm有这么好的效果?
