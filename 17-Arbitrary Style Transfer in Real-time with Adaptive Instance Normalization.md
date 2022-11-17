@@ -132,6 +132,7 @@ $$
 ## 玩法
 
 - 迁移了, 但没完全迁移: 修改了均值方差, 但没完全修改
+
 $$ T(c, s, \alpha)=g((1-\alpha) f(c)+\alpha \operatorname{AdaIN}(f(c), f(s)))$$
 
 ![](imgs/019.png)
