@@ -148,8 +148,8 @@ $\|f(T)-f(c)\|_{2}$
 然后是风格损失, 既然作者认为风格就是均值和方差:
 
 $$
-\mathcal{L}_{s}=\sum_{i=1}^{L}\left\|\mu\left(\phi_{i}(T)\right)-\mu\left(\phi_{i}(s)\right)\right\|_{2}+ \\
-\sum_{i=1}^{L}\left\|\sigma\left(\phi_{i}(T)\right)-\sigma\left(\phi_{i}(s)\right)\right\|_{2}
+L_s = \sum_{i=1}^L \left\|\mu\left(\phi_{i}(T)\right)-\mu\left(\phi_{i}(s)\right)\right\|_{2}+ \\ 
+\sum_{i=1}^{L} \left\|\sigma\left(\phi_{i}(T)\right)-\sigma\left(\phi_{i}(s)\right)\right\|_{2}
 $$
 
 另外值得一提, 解码器中没有用任何norm层, 因为这会改变均值方差, 进而影响风格. 实验部分对此进行了消融实验.
