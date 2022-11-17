@@ -1,1 +1,1 @@
-$\mathcal{L}_{c}$
+fuck $\mathcal{L}_{c}$ shit
