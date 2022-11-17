@@ -44,15 +44,15 @@ $$ \mathcal{L}  = \mathcal{L}_{c} + \lambda \mathcal{L}_{s} $$
 
 众所周知, batch normalization是人类的老朋友, 也被用于早期的风格迁移网络. 其公式长这个样子:
 
-\[ \mathrm{BN}(x)=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta \]
-\[ \mu_{c}(x)=\frac{1}{N H W} \sum_{n=1}^{N} \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n c h w} \]
-\[ \sigma_{c}(x)=\sqrt{\frac{1}{N H W} \sum_{n=1}^{N} \sum_{h=1}^{H} \sum_{w=1}^{W}\left(x_{n c h w}-\mu_{c}(x)\right)^{2}+\epsilon} \]
+$$ \mathrm{BN}(x)=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta $$
+$$ \mu_{c}(x)=\frac{1}{N H W} \sum_{n=1}^{N} \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n c h w} $$
+$$ \sigma_{c}(x)=\sqrt{\frac{1}{N H W} \sum_{n=1}^{N} \sum_{h=1}^{H} \sum_{w=1}^{W}\left(x_{n c h w}-\mu_{c}(x)\right)^{2}+\epsilon} $$
 
 batch norm在整个批次的N张图像上计算均值和方差. Ulyanov提出将其修改为Instance Normalization, 即在一张图像上计算均值和方差, 而不是在一个批次的N张图像中. 即:
 
-\[ \operatorname{IN}(x)=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta \]
-\[ \mu_{n c}(x)=\frac{1}{H W} \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n c h w}\]
-\[ \sigma_{n c}(x)=\sqrt{\frac{1}{H W} \sum_{h=1}^{H} \sum_{w=1}^{W}\left(x_{n c h w}-\mu_{n c}(x)\right)^{2}+\epsilon} \]
+$$ \operatorname{IN}(x)=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta $$
+$$ \mu_{n c}(x)=\frac{1}{H W} \sum_{h=1}^{H} \sum_{w=1}^{W} x_{n c h w}$$
+$$ \sigma_{n c}(x)=\sqrt{\frac{1}{H W} \sum_{h=1}^{H} \sum_{w=1}^{W}\left(x_{n c h w}-\mu_{n c}(x)\right)^{2}+\epsilon} $$
 
 这是代码的一小步, 确实性能提升的一大步. 为什么instance norm有这么好的效果?
 
@@ -100,25 +100,25 @@ c内容图像, s风格图像, f VGG编码器, g VGG解码器, $\phi_i$ VGG的一
 
 adain为:
 
-\[\operatorname{AdaIN}(x, y)=\sigma(y)\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\mu(y)\]
+$$ \operatorname{AdaIN}(x, y)=\sigma(y)\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\mu(y) $$
 
 - 首先使用第一个VGG将内容图像和参考图像降维, 得到高级特征f(c)和f(s). 
 - 经过一个adain层, f(c)的均值方差被调整为f(s)的均值方差, 这意味着其输出(记为t)有了风格图像的风格. 
-\[ t=\operatorname{AdaIN}(f(c), f(s))\]
+$$ t=\operatorname{AdaIN}(f(c), f(s)) $$
 - 然后通过一个解码器, 将高级的图像特征还原为rgb图像, 
-\[T=g(t)\]
+$$ T=g(t) $$
 - 随后和Johnson的工作相同, 用得到的图像, 计算和内容图像在内容上的相似程度, 和风格图像在风格上的相似程度, (通过第二个VGG计算损失)得到损失完成训练.
 
 其中内容损失为:
-\[\mathcal{L}_{c}=\|f(T)-t\|_{2}\]
+$$ \mathcal{L}_{c}=\|f(T)-t\|_{2} $$
 注意和之前的工作不同, 作者用的是修改后风格的t, 而不是像之前的工作计算$\|f(T)-f(c)\|_{2}$. 作者给的解释是这样训练更快. 个人认为这种操作还是比较激进的, 没有证明adain操作不会改变内容.
 
 然后是风格损失, 既然作者认为风格就是均值和方差:
 
-\[
+$$
 \mathcal{L}_{s}=\sum_{i=1}^{L}\left\|\mu\left(\phi_{i}(T)\right)-\mu\left(\phi_{i}(s)\right)\right\|_{2}+ \\
 \sum_{i=1}^{L}\left\|\sigma\left(\phi_{i}(T)\right)-\sigma\left(\phi_{i}(s)\right)\right\|_{2}
-\]
+$$
 
 另外值得一提, 解码器中没有用任何norm层, 因为这会改变均值方差, 进而影响风格. 实验部分对此进行了消融实验.
 
@@ -130,12 +130,12 @@ adain为:
 ## 玩法
 
 - 迁移了, 但没完全迁移: 修改了均值方差, 但没完全修改
-\[T(c, s, \alpha)=g((1-\alpha) f(c)+\alpha \operatorname{AdaIN}(f(c), f(s)))\]
+$$ T(c, s, \alpha)=g((1-\alpha) f(c)+\alpha \operatorname{AdaIN}(f(c), f(s)))$$
 
 ![](imgs/019.png)
 
 - 风格的组合: 特征的线性组合
-\[T\left(c, s_{1,2, \ldots K}, w_{1,2, \ldots K}\right)=g\left(\sum_{k=1}^{K} w_{k} \operatorname{AdaIN}\left(f(c), f\left(s_{k}\right)\right)\right)\]
+$$ T\left(c, s_{1,2, \ldots K}, w_{1,2, \ldots K}\right)=g\left(\sum_{k=1}^{K} w_{k} \operatorname{AdaIN}\left(f(c), f\left(s_{k}\right)\right)\right)$$
 
 ![](imgs/020.png)
 
