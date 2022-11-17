@@ -14,7 +14,7 @@
 
 损失由两部分组成:
 
-\\[ \mathcal{L}  = \mathcal{L}_{c} + \lambda \mathcal{L}_{s} \\]
+\[ \mathcal{L}  = \mathcal{L}_{c} + \lambda \mathcal{L}_{s} \]
 
 输入为内容图像content image(记为c)和风格图像style image, 希望输出的图像既有c的内容, 又有s的风格. 
 
