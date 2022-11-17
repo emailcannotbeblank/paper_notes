@@ -1,7 +1,7 @@
 # 论文笔记-《Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization》
 
 ## 废话1
-$a_{1}$
+$a_{1}$ $a_2$
 事实上, adain已经是一篇非常久远的工作, 网上也能搜索到不少介绍adain的博客. 但写两篇论文阅读报告是我的课程作业, 因此还是重复造一次轮子. 其实本来打算写上stylegan的阅读报告, 看到里面有个adain模块, 想知道起到什么作用, 就看了下这篇文章. 为了看懂这篇论文, 又看了两篇更早期的工作, 那么问题来了, 我为什么不写更早的Perceptual Losses for Real-Time Style Transfer and Super-Resolution, 或者更新的stylegan? ~~(因为更早的工作实在太老了, stylegan比较麻烦[滑稽]).~~ 
 
 因为我非常喜欢adain这篇工作, 它上来先否定掉别人的观点, 抛出自己的观点; 然后设计实验, 证明自己的观点更加合理; 接下来提出本文的方法, 解决目前存在的一个问题; 最后展示本文的工作一些花里胡哨的玩法.
