@@ -139,17 +139,16 @@ $$ T=g(t) $$
 
 其中内容损失为:
 
-$$ \mathcal{L}_{c}=\|f(T)-t\|_{2} $$
+$$ \mathcal{L}_{c}=||f(T)-t||_2 $$
 
 注意和之前的工作不同, 作者用的是修改后风格的t, 而不是像之前的工作计算
-$\|f(T)-f(c)\|_{2}$
+$||f(T)-f(c)||_{2}$
 . 作者给的解释是这样训练更快. 个人认为这种操作还是比较激进的, 没有证明adain操作不会改变内容.
 
 然后是风格损失, 既然作者认为风格就是均值和方差:
 
 $$
-L_s = \sum_{i=1}^L \left\|\mu\left(\phi_{i}(T)\right)-\mu\left(\phi_{i}(s)\right)\right\|_{2}+ \\ 
-\sum_{i=1}^{L} \left\|\sigma\left(\phi_{i}(T)\right)-\sigma\left(\phi_{i}(s)\right)\right\|_{2}
+L_{s}=\sum_{i=1}^{L} ||\mu\left(\phi_i(T)\right)-\mu\left(\phi_i(s)\right)||_2+ ||\sigma\left(\phi_i(T)\right)-\sigma\left(\phi_i(s)\right)||_2
 $$
 
 另外值得一提, 解码器中没有用任何norm层, 因为这会改变均值方差, 进而影响风格. 实验部分对此进行了消融实验.
